@@ -10,7 +10,7 @@ export const snippets = [
       { user: "A&R_Anders", text: "Love the vibe!" },
       { user: "Deli_beats", text: "Good work with instrumentals" },
     ],
-    url: "https://sample-videos.com/audio/mp3/wave.mp3",
+    url: "https://file-examples.com/storage/fe77dfdbf7e1fa14d26d0f1/2017/11/file_example_MP3_700KB.mp3",
   },
   {
     id: 2,
