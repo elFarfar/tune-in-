@@ -1,10 +1,10 @@
 import { Link } from "react-router-dom";
 import { Home, Search, User } from "lucide-react";
-import logo from "../assets/LOGO.png";
+import logo from "../assets/logo.png";
 
 const Navbar = () => {
   return (
-    <nav className="bg-black text-white flex items-center justify-between px-8 py-4 shadow-lg">
+    <nav className="bg-black text-white flex items-center justify-between px-8 py-4 shadow-lg fixed top-0 left-0 w-full z-50">
       {/* LEFT SIDE */}
 
       <div className="flex items-center space-x-6">
@@ -12,7 +12,7 @@ const Navbar = () => {
           to="/"
           className="flex items-center space-x-1 hover:text-blue-400 transition"
         >
-          <Home size="{20}" />
+          <Home size={20} />
           <span className="text-sm font-semibold tracking-widest">HOME</span>
         </Link>
 
@@ -20,18 +20,28 @@ const Navbar = () => {
           to="/explore"
           className="flex items-center space-x-1 hover:text-blue-400 transition"
         >
-          <Search size="{20}" />
+          <Search size={20} />
           <span className="text-sm font-semibold tracking-widest">EXPLORE</span>
         </Link>
       </div>
       {/*CENTER - LOGO */}
       <Link to="/" className="flex items-center justify-center">
         <img
-          src="{logo}"
+          src={logo}
           alt="Tune-in Logo"
           className="h-10 object-contain hover:scale-105 transition-transform"
         />
       </Link>
+
+      {/* RIGHT SIDE */}
+      <div className="flex items-center space-x-2 hover:text-blue-400 transition">
+        <Link to="/profile" className="flex items-center space-x-1">
+          <span className="text-sm font-semibold tracking-widest">PROFILE</span>
+          <User size={20} />
+        </Link>
+      </div>
     </nav>
   );
 };
+
+export default Navbar;
