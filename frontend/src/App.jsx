@@ -6,19 +6,25 @@ import AdminUsers from "./pages/AdminUsers";
 import AdminSnippets from "./pages/AdminSnippets";
 import Profile from "./pages/Profile";
 import Register from "./pages/Register";
-
+import MainLayout from "./layouts/MainLayout";
 
 function App() {
   return (
     <Router>
       <Routes>
+        <Route element={<MainLayout />}>
+          <Route path="/feed" element={<Feed />} />
+          <Route path="/profile" element={<Profile />} />
+        </Route>
+
+        {/* Admin-routes */}
+        <Route path="/admin" element={<Admin />} />
+        <Route path="/admin/users" element={<AdminUsers />} />
+        <Route path="/admin/snippets" element={<AdminSnippets />} />
+
+        {/* Auth-sidor */}
         <Route path="/" element={<Login />} />
-        <Route path="/Feed" element={<Feed />} />
-        <Route path="/Admin" element={<Admin />} />
-        <Route path="/Admin/Users" element={<AdminUsers />} />
-        <Route path="/Admin/Snippets" element={<AdminSnippets />} />
-        <Route path="/Profile" element={<Profile />} />
-        <Route path="/Register" element={<Register />} />
+        <Route path="/register" element={<Register />} />
       </Routes>
     </Router>
   );
