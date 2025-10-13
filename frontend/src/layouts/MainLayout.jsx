@@ -1,13 +1,13 @@
 import React from "react";
-import { Outlet } from "react-router-dom";
 import Navbar from "../components/Navbar";
+import { Outlet } from "react-router-dom";
 
 const MainLayout = () => {
   return (
-    <div className="min-h-screen bg-gray-950 text-white">
+    <div className="bg-[#1a1a1a] text-white min-h-screen flex flex-col items-center">
       <Navbar />
-      <main className="pt-20 px-6">
-        <Outlet /> 
+      <main className="w-full max-w-3xl pt-24 px-4 flex flex-col items-center">
+        <Outlet />
       </main>
     </div>
   );
