@@ -14,15 +14,13 @@ function App() {
       <Routes>
         <Route element={<MainLayout />}>
           <Route path="/feed" element={<Feed />} />
+          <Route path="/admin" element={<Admin />} />
+          <Route path="/admin/users" element={<AdminUsers />} />
+          <Route path="/admin/snippets" element={<AdminSnippets />} />
           <Route path="/profile" element={<Profile />} />
         </Route>
 
-        {/* Admin-routes */}
-        <Route path="/admin" element={<Admin />} />
-        <Route path="/admin/users" element={<AdminUsers />} />
-        <Route path="/admin/snippets" element={<AdminSnippets />} />
-
-        {/* Auth-sidor */}
+        {/* Utanför layouten */}
         <Route path="/" element={<Login />} />
         <Route path="/register" element={<Register />} />
       </Routes>
