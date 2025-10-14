@@ -10,7 +10,7 @@ export default function AdminUsers() {
   return (
     <div className="p-6">
       <h2 className="text-2xl font-bold mb-4">Manage Users</h2>
-      <table className="w-full bg-white shadow rounded">
+      <table className="w-full  shadow rounded">
         <thead>
           <tr className="bg-indigo-600 text-white">
             <th className="p-3 text-left">Name</th>
