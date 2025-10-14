@@ -29,7 +29,7 @@ const PostCard = ({ snippet }) => {
   };
   return (
     <div className="bg-white shadow-md rounded-lg p-4 mb-6">
-      <h2 className="font-semibold text-lg">{snippet.title}</h2>
+      <h2 className="font-semibold text-gray-900">{snippet.title}</h2>
       <p className="text-sm text-gray-600">By {snippet.user}</p>
 
       <div className="mt-2 min-h-[80px]" ref={waveformRef}></div>
@@ -41,7 +41,7 @@ const PostCard = ({ snippet }) => {
         {isPlaying ? "pause" : "play"}
       </button>
 
-      <p className="mt-2">❤️ {snippet.likes} likes</p>
+      <p className="mt-2 text-gray-900">❤️ {snippet.likes} likes</p>
 
       <div className="mt-2">
         {snippet.comments.map((c, i) => (
