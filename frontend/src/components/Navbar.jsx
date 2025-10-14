@@ -4,7 +4,7 @@ import logo from "../assets/logo.png";
 
 const Navbar = () => {
   return (
-    <nav className="bg-black text-white flex items-center justify-between px-8 py-4 shadow-lg">
+    <nav className="bg-black text-white flex items-center justify-between px-8 py-4 shadow-lg w-full fixed top-0 left-0 z-50">
       {/* LEFT SIDE */}
 
       <div className="flex items-center space-x-6">
@@ -29,7 +29,7 @@ const Navbar = () => {
         <img
           src={logo}
           alt="Tune-in Logo"
-          className="h-10 object-contain hover:scale-105 transition-transform"
+          className="h-15 object-contain hover:scale-105 transition-transform"
         />
       </Link>
 
