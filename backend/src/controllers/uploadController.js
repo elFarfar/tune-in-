@@ -1,37 +1,58 @@
-import AWS from "aws-sdk";
 import multer from "multer";
-import multerS3 from "mmulter-s3";
+import AWS from "aws-sdk";
+import dotenv from "dotenv";
+import Snippet from "../models/snippet.js";
+import { v4 as uuidv4 } from "uuid";
+
+dotenv.config();
 
 
-//s3 config
+
+// Configure S3 client
 const s3 = new AWS.S3({
   accessKeyId: process.env.AWS_ACCESS_KEY,
   secretAccessKey: process.env.AWS_SECRET_KEY,
-  region: "eu-north-1",
+  region: process.env.AWS_REGION,
 });
 
-//multer
-const upload = multer ({
-  storage: multerS3({
-    s3,
-    bucket: "tunein-snippets",
-    acl: "public-read",
-    key: (req, file, cb) =>{
-      cb(null, Date.now().toString() + "-" + file.originalname);
+// Use memory storage (buffer)
+const storage = multer.memoryStorage();
+export const upload = multer({ storage });
+
+// Upload function
+export const uploadToS3 = async (req, res) => {
+  try {
+    const file = req.file;
+
+    if (!file) {
+      return res.status(400).json({ error: "No file uploaded" });
     }
-  })
-});
 
+    const fileKey = `snippets/${uuidv4()}-${file.originalname}`;
 
-//Controller function
-export const uploadFile = (req, res) => {
-  if (!req.file) {
-    return res.status(400).json({ message: "No file uploaded"});
+    // Upload to S3
+    const params = {
+      Bucket: process.env.AWS_BUCKET_NAME,
+      Key: fileKey,
+      Body: file.buffer,
+      ContentType: file.mimetype,
+    };
+
+    const data = await s3.upload(params).promise();
+
+    // Save to MongoDB
+    const newSnippet = await Snippet.create({
+      title: req.body.title || file.originalname,
+      artist: req.body.artist || "Unknown Artist",
+      audioUrl: data.Location,
+    });
+
+    res.status(200).json({
+      message: "Upload successful",
+      snippet: newSnippet,
+    });
+  } catch (error) {
+    console.error("Upload error:", error);
+    res.status(500).json({ error: "Upload failed" });
   }
-  res,json({ fileUrl: req.file.location});
 };
-
-
-export const uploadMiddleware = upload.single("file");
-
-
