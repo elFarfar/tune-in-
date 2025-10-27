@@ -1,4 +1,3 @@
-import { RolesAnywhere } from "aws-sdk";
 import Post from "../models/Post.js";
 
 //GET ALL POST

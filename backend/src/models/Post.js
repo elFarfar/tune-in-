@@ -1,9 +1,9 @@
 import mongoose from "mongoose";
 
 const postSchema = new mongoose.Schema({
-  title: { type: string, required: true },
-  artist: { type: string },
-  audioUrl: { type: string, required: true},
+  title: { type: String, required: true },
+  artist: { type: String },
+  audioUrl: { type: String, required: true},
   createdBy: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "User",
