@@ -2,6 +2,8 @@ import express from "express";
 import cors from "cors";
 import uploadRoutes from "./routes/uploadRoutes.js";
 import userRoutes from "./routes/userRoutes.js";
+import authRoutes from "./routes/authRoutes.js";
+import postRoutes from "./routes/postRoutes.js";
 
 const app = express();
 
@@ -13,5 +15,7 @@ app.get("/", (req, res) => {
 });
 app.use("/api/users", userRoutes);
 app.use("/api/upload", uploadRoutes);
+app.use("/auth", authRoutes);
+app.use("/posts", postRoutes);
 
 export default app;
