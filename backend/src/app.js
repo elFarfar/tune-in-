@@ -17,7 +17,7 @@ app.get("/api", (req, res) => {
 app.use("/api/users", userRoutes);
 app.use("/api/upload", uploadRoutes);
 app.use("/api/auth", authRoutes);
-app.use("/posts", postRoutes);
+app.use("/api/posts", postRoutes);
 
 //ADMIN
 app.use("/admin", adminRoutes);
