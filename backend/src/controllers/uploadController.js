@@ -6,8 +6,6 @@ import { v4 as uuidv4 } from "uuid";
 
 dotenv.config();
 
-
-
 // Configure S3 client
 const s3 = new AWS.S3({
   accessKeyId: process.env.AWS_ACCESS_KEY,
@@ -49,6 +47,7 @@ export const uploadToS3 = async (req, res) => {
 
     res.status(200).json({
       message: "Upload successful",
+      url: data.Location,
       snippet: newSnippet,
     });
   } catch (error) {

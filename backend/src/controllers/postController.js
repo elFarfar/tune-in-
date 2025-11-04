@@ -88,3 +88,19 @@ export const deletePost = async (req, res) => {
     res.status(500).json({ message: "Error deleting post!" });
   }
 };
+
+// SEARCH POSTS
+export const searchPosts = async (req, res) => {
+  try {
+    const query = req.query.q || "";
+    const posts = await Post.find({
+      $or: [
+        { title: { $regex: query, $options: "i" } },
+        { artist: { $regex: query, $options: "i" } },
+      ],
+    }).populate("createdBy", "username");
+    res.status(200).json(posts);
+  } catch (error) {
+    res.status(500).json({ message: "Error searching posts" });
+  }
+};

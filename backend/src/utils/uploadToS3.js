@@ -3,7 +3,7 @@ import multer from "multer";
 import { Readable } from "stream";
 
 const s3 = new aws.S3({
-  acessKeyId: process.env.AWS_ACCESS_KEY,
+  accessKeyId: process.env.AWS_ACCESS_KEY_ID,
   secretAccessKey: process.env.AWS_SECRET_KEY,
   region: process.env.AWS_REGION,
 });
