@@ -1,8 +1,20 @@
-import React from "react";
+import React, { useContext, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import { Outlet } from "react-router-dom";
+import { AuthContext } from "../context/AuthContext"
 
 const MainLayout = () => {
+  const { user } = useContext(AuthContext);
+  const navigate = useNavigate();
+
+  //  Om användaren inte är inloggad → redirect till /login
+  useEffect(() => {
+    if (!user) {
+      navigate("/login");
+    }
+  }, [user, navigate]);
+
   return (
     <div className="bg-[#1a1a1a] text-white min-h-screen flex flex-col items-center">
       <Navbar />
