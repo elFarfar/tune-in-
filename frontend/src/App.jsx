@@ -8,6 +8,7 @@ import Profile from "./pages/Profile";
 import Register from "./pages/Register";
 import MainLayout from "./layouts/MainLayout";
 import Explore from "./pages/Explore";
+import CreatePost from "./pages/CreatePosts"
 import { AuthProvider } from "./context/AuthContext";
 
 function App() {
@@ -22,6 +23,7 @@ function App() {
             <Route path="/admin/snippets" element={<AdminSnippets />} />
             <Route path="/profile" element={<Profile />} />
             <Route path="/explore" element={<Explore />} />
+            <Route path="/create" element={<CreatePost />} />
           </Route>
 
           {/* Utanför layouten */}

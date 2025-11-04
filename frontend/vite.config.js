@@ -1,6 +1,7 @@
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
 import { VitePWA } from "vite-plugin-pwa";
+
 export default defineConfig({
   plugins: [
     react(),
@@ -17,8 +18,7 @@ export default defineConfig({
       manifest: {
         name: "Tune-In",
         short_name: "TuneIn",
-        description:
-          "A platform for artists, producers, and A&Rs to share snippets.",
+        description: "A platform for artists, producers, and A&Rs to share snippets.",
         theme_color: "#1a1a1a",
         background_color: "#1a1a1a",
         display: "standalone",
@@ -54,18 +54,14 @@ export default defineConfig({
       workbox: {
         runtimeCaching: [
           {
-            urlPattern: ({ request }) =>
-              request.destination === "document" ||
-              request.destination === "script",
+            urlPattern: ({ request }) => request.destination === "document" || request.destination === "script",
             handler: "NetworkFirst",
             options: {
               cacheName: "html-js-cache",
             },
           },
           {
-            urlPattern: ({ request }) =>
-              request.destination === "image" ||
-              request.destination === "style",
+            urlPattern: ({ request }) => request.destination === "image" || request.destination === "style",
             handler: "CacheFirst",
             options: {
               cacheName: "assets-cache",
