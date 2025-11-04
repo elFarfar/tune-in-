@@ -1,58 +1,42 @@
-import React, { useState } from "react";
-import TextField from "@mui/material/TextField";
-import { snippets } from "../data/snippets"; // 👈 import your dummy snippets
-import PostCard from "../components/PostCard"; // reuse the PostCard component
+import { useState } from "react";
+import axios from "axios";
 
-function Explore() {
+export default function Explore() {
   const [query, setQuery] = useState("");
-  
-  // Filter snippets by title or user
-  const filteredSnippets = snippets.filter(
-    (snippet) =>
-      snippet.title.toLowerCase().includes(query.toLowerCase()) ||
-      snippet.user.toLowerCase().includes(query.toLowerCase())
-  );
+  const [results, setResults] = useState([]);
+
+  const handleSearch = async (e) => {
+    e.preventDefault();
+    const res = await axios.get(`http://localhost:5000/api/posts/search?q=${query}`);
+    setResults(res.data);
+  };
 
   return (
-    <div className="flex flex-col items-center min-h-screen  p-6">
-      <h1 className="text-2xl font-bold text-white-900 mb-6">SEARCH POSTS</h1>
+    <div className="p-6 max-w-2xl mx-auto text-white">
+      <h1 className="text-2xl font-bold mb-4">Explore</h1>
 
-      <div className="w-full max-w-md mb-8">
-        <TextField
-          id="outlined-basic"
-          label="Search"
-          variant="outlined"
-          fullWidth
+      <form onSubmit={handleSearch} className="flex gap-2 mb-6">
+        <input
+          type="text"
+          placeholder="Search for artists, titles..."
+          className="flex-1 p-2 rounded text-black"
           value={query}
           onChange={(e) => setQuery(e.target.value)}
-          //Styleoveride for color change
-          sx={{
-            "& .MuiOutlinedInput-root": {
-              "& fieldset": { borderColor: "white" }, 
-              "&:hover fieldset": { borderColor: "#60a5fa" }, 
-              "&.Mui-focused fieldset": { borderColor: "white" }, 
-            },
-            "& .MuiInputLabel-root": {
-              color: "white", 
-            },
-            "& .MuiInputBase-input": {
-              color: "white",
-            },
-          }}
         />
-      </div>
+        <button className="bg-blue-500 px-4 rounded hover:bg-blue-600">Search</button>
+      </form>
 
-      <div className="w-full max-w-2xl">
-        {filteredSnippets.length > 0 ? (
-          filteredSnippets.map((snippet) => (
-            <PostCard key={snippet.id} snippet={snippet} />
-          ))
-        ) : (
-          <p className="text-white-500">No results found.</p>
-        )}
-      </div>
+      <ul className="flex flex-col gap-3">
+        {results.map((post) => (
+          <li key={post._id} className="bg-gray-800 p-3 rounded">
+            <h2 className="font-semibold">{post.title}</h2>
+            <p className="text-sm text-gray-400">{post.artist}</p>
+            <audio controls className="mt-2 w-full">
+              <source src={post.audioUrl} type="audio/mpeg" />
+            </audio>
+          </li>
+        ))}
+      </ul>
     </div>
   );
 }
-
-export default Explore;
