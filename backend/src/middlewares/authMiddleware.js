@@ -3,7 +3,7 @@ import User from "../models/User.js";
 
 export const protect = (req, res, next) => {
   try {
-    // READ Header: "Authorization: Bearer <token>"
+  
     const authHeader = req.headers.authorization;
 
     if (!authHeader || !authHeader.startsWith("Bearer ")) {

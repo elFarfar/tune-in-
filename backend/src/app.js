@@ -14,12 +14,14 @@ app.use(express.json());
 app.get("/api", (req, res) => {
   res.send("Tune-In API is running");
 });
+
+// Vanliga routes
 app.use("/api/users", userRoutes);
 app.use("/api/upload", uploadRoutes);
 app.use("/api/auth", authRoutes);
 app.use("/api/posts", postRoutes);
 
-//ADMIN
-app.use("/admin", adminRoutes);
+// ADMIN ROUTES — under /api/admin
+app.use("/api/admin", adminRoutes);
 
 export default app;

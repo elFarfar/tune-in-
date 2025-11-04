@@ -6,7 +6,7 @@ const userSchema = new mongoose.Schema({
   password: { type: String, required: true },
   role: { 
     type: String, 
-    enum: ["artist", "producer", "A&R"], 
+    enum: ["artist", "producer", "A&R", "admin"], 
     required: true 
   },
 }, { timestamps: true });

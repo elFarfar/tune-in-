@@ -1,6 +1,5 @@
 import User from "../models/User.js";
 import bcrypt from "bcryptjs";
-// FUTURE FUNCTION import Post from "../models/Post.js";
 
 //GET ALL USERS
 

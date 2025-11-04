@@ -1,17 +1,14 @@
-import axios from "axios";
+import api from "../utils/api";
 
-const API = import.meta.env.VITE_API_URL;
-
-//REGISTER USER
-
+// REGISTER USER
 export const registerUser = async (userData) => {
-  const res = await axios.post(`${API}/auth/register`, userData);
+  const res = await api.post("/auth/register", userData);
   return res.data;
 };
-//LOGIN USER
 
+// LOGIN USER
 export const loginUser = async (userData) => {
-  const res = await axios.post(`${API}/auth/login`, userData);
+  const res = await api.post("/auth/login", userData);
 
   if (res.data.token) {
     localStorage.setItem("token", res.data.token);
@@ -19,8 +16,7 @@ export const loginUser = async (userData) => {
   return res.data;
 };
 
-//LOGOUT USER
-
+// LOGOUT USER
 export const logoutUser = () => {
   localStorage.removeItem("token");
 };

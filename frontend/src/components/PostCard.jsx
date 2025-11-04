@@ -32,7 +32,7 @@ const PostCard = ({ snippet }) => {
       <h2 className="font-semibold text-gray-900">{snippet.title}</h2>
       <p className="text-sm text-gray-600">By {snippet.user}</p>
 
-      <div className="mt-2 min-h-[80px]" ref={waveformRef}></div>
+      <div className="mt-2 min-h-80px" ref={waveformRef}></div>
 
       <button
         onClick={togglePLay}

@@ -71,4 +71,9 @@ export default defineConfig({
       },
     }),
   ],
+  server: {
+    proxy: {
+      '/admin': 'http://localhost:5000',  // Forward all /admin API requests to the backend
+    },
+  },
 });
