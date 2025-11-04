@@ -11,16 +11,15 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-app.get("/", (req, res) => {
+app.get("/api", (req, res) => {
   res.send("Tune-In API is running");
 });
 app.use("/api/users", userRoutes);
 app.use("/api/upload", uploadRoutes);
-app.use("/auth", authRoutes);
+app.use("/api/auth", authRoutes);
 app.use("/posts", postRoutes);
 
 //ADMIN
-app.use;
-"/admin", adminRoutes;
+app.use("/admin", adminRoutes);
 
 export default app;
