@@ -8,7 +8,9 @@ import adminRoutes from "./routes/adminRoutes.js";
 
 const app = express();
 
-app.use(cors());
+app.use(cors({
+  origin: ["https://tune-in-now.vercel.app"]
+}));
 app.use(express.json());
 
 app.get("/api", (req, res) => {
