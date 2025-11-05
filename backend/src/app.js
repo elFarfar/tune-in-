@@ -8,8 +8,15 @@ import adminRoutes from "./routes/adminRoutes.js";
 
 const app = express();
 
+
+const allowedOrigins = [
+  "http://localhost:5173",       
+  "https://tune-in-now.vercel.app" 
+];
+
 app.use(cors({
-  origin: ["https://tune-in-now.vercel.app"]
+  origin: allowedOrigins,
+  credentials: true,
 }));
 app.use(express.json());
 

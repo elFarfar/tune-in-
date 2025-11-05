@@ -5,7 +5,6 @@ import cors from "cors";
 dotenv.config();
 
 
-app.use(cors({ origin: "http://localhost:5173" }));
 
 mongoose
   .connect(process.env.MONGO_URI)
