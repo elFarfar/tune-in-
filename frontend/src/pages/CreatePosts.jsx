@@ -9,6 +9,8 @@ export default function CreatePost() {
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState("");
 
+  const API = import.meta.env.VITE_API_URL || "http://localhost:5000/api";
+
   const handleFileChange = (e) => {
     setFile(e.target.files[0]);
   };
@@ -34,26 +36,22 @@ export default function CreatePost() {
       const formData = new FormData();
       formData.append("file", file);
 
-      const uploadRes = await axios.post(
-        "http://localhost:5000/api/upload",
-        formData,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-            "Content-Type": "multipart/form-data",
-          },
-        }
-      );
+      const uploadRes = await axios.post(`${API}/upload`, formData, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "multipart/form-data",
+        },
+      });
 
-     const audioUrl = uploadRes.data.url;
+      const audioUrl = uploadRes.data.url;
 
       if (!audioUrl) {
         throw new Error("Upload failed: no URL returned.");
       }
 
-      //  Create post with required fields
+      // Create post
       await axios.post(
-        "http://localhost:5000/api/posts",
+        `${API}/posts`,
         {
           title,
           artist: user?.username,
@@ -64,7 +62,6 @@ export default function CreatePost() {
         }
       );
 
-      // Reset form and show success
       setTitle("");
       setFile(null);
       setMessage("Post created successfully!");

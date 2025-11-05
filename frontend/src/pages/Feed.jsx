@@ -8,15 +8,17 @@ export default function Feed() {
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(true);
 
+  const API = import.meta.env.VITE_API_URL || "http://localhost:5000/api";
+
   // GET ALL POSTS
   const fetchPosts = async () => {
     try {
-      const res = await axios.get("http://localhost:5000/api/posts");
+      const res = await axios.get(`${API}/posts`);
       setPosts(res.data.reverse()); // latest first
     } catch (error) {
       console.error("Error fetching posts:", error);
     } finally {
-      setLoading(false);
+      setLoading(false);        
     }
   };
 

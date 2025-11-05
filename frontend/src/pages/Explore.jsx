@@ -5,10 +5,17 @@ export default function Explore() {
   const [query, setQuery] = useState("");
   const [results, setResults] = useState([]);
 
+  const API = import.meta.env.VITE_API_URL || "http://localhost:5000/api";
+
   const handleSearch = async (e) => {
     e.preventDefault();
-    const res = await axios.get(`http://localhost:5000/api/posts/search?q=${query}`);
-    setResults(res.data);
+    try {
+      const res = await axios.get(`${API}/posts/search?q=${query}`);
+      setResults(res.data);
+    } catch (error) {
+      console.error("Error fetching posts:", error);
+      setResults([]);
+    }
   };
 
   return (
