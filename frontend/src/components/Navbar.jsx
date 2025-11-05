@@ -3,6 +3,7 @@ import { Home, Search, User, LogOut, X, Menu } from "lucide-react";
 import logo from "../assets/LOGO.png";
 import { useContext } from "react";
 import { AuthContext } from "../context/AuthContext";
+import { useState } from "react";
 
 const Navbar = () => {
   const { user, logout } = useContext(AuthContext);
