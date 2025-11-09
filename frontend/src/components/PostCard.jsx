@@ -17,10 +17,15 @@ const PostCard = ({ snippet }) => {
       barWidth: 2,
       responsive: true,
     });
-    wavesurfer.current.load(snippet.url);
+    wavesurfer.current.load(`${import.meta.env.VITE_API_URL}/${snippet.url}`);
 
     //Cleanup while mounting
-    return () => wavesurfer.current.destroy();
+    return () => {
+      if (wavesurfer.current) {
+        wavesurfer.current.destroy();
+        wavesurfer.current = null;
+      }
+    };
   }, [snippet.url]);
 
   const togglePLay = () => {
@@ -35,10 +40,10 @@ const PostCard = ({ snippet }) => {
       <div className="mt-2 min-h-80px" ref={waveformRef}></div>
 
       <button
-        onClick={togglePLay}
+        onClick={togglePlay}
         className="mt-3 bg-indigo-600 text-white px-4 py-1 rounded hover:bg-indigo-700"
       >
-        {isPlaying ? "pause" : "play"}
+        {isPlaying ? "Pause" : "Play"}
       </button>
 
       <p className="mt-2 text-gray-900">❤️ {snippet.likes} likes</p>
