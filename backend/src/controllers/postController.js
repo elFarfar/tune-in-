@@ -3,7 +3,6 @@ import Post from "../models/Post.js";
 //  GET ALL POSTS
 export const getPosts = async (req, res) => {
   try {
-    
     const posts = await Post.find().populate("createdBy", "username role");
     res.status(200).json(posts);
   } catch (error) {
@@ -102,5 +101,34 @@ export const searchPosts = async (req, res) => {
     res.status(200).json(posts);
   } catch (error) {
     res.status(500).json({ message: "Error searching posts" });
+  }
+};
+
+// LIKE / UNLIKE POST
+export const toggleLike = async (req, res) => {
+  try {
+    const post = await Post.findById(req.params.id);
+
+    if (!post) {
+      return res.status(404).json({ message: "Post not found!" });
+    }
+
+    const userId = req.user.id;
+    const hasLiked = post.likes.includes(userId);
+
+    if (hasLiked) {
+      post.likes = post.likes.filter((id) => id.toString() !== userId);
+    } else {
+      post.likes.push(userId);
+    }
+
+    await post.save();
+    res.status(200).json({
+      message: hasLiked ? "Like removed" : "Post liked",
+      likesCount: post.likes.length,
+    });
+  } catch (error) {
+    console.error("Error toggling like:", error);
+    res.status(500).json({ message: "Error toggling like" });
   }
 };

@@ -14,7 +14,7 @@ export default function Feed() {
   const fetchPosts = async () => {
     try {
       const res = await axios.get(`${API}/posts`);
-      setPosts(res.data.reverse()); // latest first
+      setPosts(res.data.reverse()); 
     } catch (error) {
       console.error("Error fetching posts:", error);
     } finally {
