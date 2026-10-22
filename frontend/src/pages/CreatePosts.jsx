@@ -3,8 +3,9 @@ import axios from "axios";
 import { useAuth } from "../context/AuthContext";
 
 export default function CreatePost() {
-  const { user, token } = useAuth(); 
+  const { user, token } = useAuth();
   const [title, setTitle] = useState("");
+  const [description, setDescription] = useState("");
   const [file, setFile] = useState(null);
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState("");
@@ -18,7 +19,7 @@ export default function CreatePost() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (!title || !file) {
+    if (!title || !file || !description) {
       setMessage("Please fill in all fields.");
       return;
     }
@@ -54,6 +55,7 @@ export default function CreatePost() {
         `${API}/posts`,
         {
           title,
+          description,
           artist: user?.username,
           audioUrl,
         },
@@ -63,6 +65,7 @@ export default function CreatePost() {
       );
 
       setTitle("");
+      setDescription("");
       setFile(null);
       setMessage("Post created successfully!");
 
@@ -71,7 +74,9 @@ export default function CreatePost() {
     } catch (error) {
       console.error("Error creating post:", error);
       setMessage(
-        error.response?.data?.message || error.message || "Something went wrong."
+        error.response?.data?.message ||
+          error.message ||
+          "Something went wrong."
       );
     } finally {
       setLoading(false);
@@ -79,28 +84,36 @@ export default function CreatePost() {
   };
 
   return (
-    <div className="p-6 max-w-md mx-auto bg-[#222] rounded-xl shadow-lg mt-10">
+    <div className="p-8 max-w-xl mx-auto  rounded-xl shadow-lg mt-20">
       <h1 className="text-2xl font-bold mb-4 text-center">Create Post</h1>
 
       <form
         onSubmit={handleSubmit}
-        className="flex flex-col gap-3"
+        className="flex flex-col gap-4"
         encType="multipart/form-data"
       >
         <input
           type="text"
-          placeholder="Title"
-          className="border p-2 rounded text-black"
+          placeholder="Give your post a name"
+          className="border p-3 rounded text-white-500"
           value={title}
           onChange={(e) => setTitle(e.target.value)}
+        />
+
+        <textarea
+          placeholder="What's the issue?"
+          className="border rounded p-3 h-32 resize-none align-top text-white-500"
+          value={description}
+          onChange={(e) => setDescription(e.target.value)}
         />
 
         <input
           type="file"
           accept="audio/*"
           onChange={handleFileChange}
-          className="border p-2 rounded bg-[#333]"
+          className="border p-2 rounded bg-gray-400 cursor-pointer"
         />
+        <p className="text-sm text-gray-400 -mt-2">max 15mb & max 30 sek</p>
 
         <button
           type="submit"

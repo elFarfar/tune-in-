@@ -1,6 +1,11 @@
 import User from "../models/User.js";
 import bcrypt from "bcryptjs";
+import Post from "../models/Post.js"
 
+
+
+
+//USER_CONTROL
 //GET ALL USERS
 
 export const getAllUsers = async (req, res) => {
@@ -86,5 +91,30 @@ export const addNewUser = async (req, res) => {
   } catch (error) {
     console.error("Add new user:", error);
     res.status(500).json({ message: "Server error" });
+  }
+};
+
+// POST CONTROL
+export const getAllPosts = async (req, res) => {
+  try {
+    const posts = await Post.find()
+      .populate("createdBy", "username email role")
+      .sort({ createdAt: -1 });
+    res.status(200).json(posts);
+  } catch (error) {
+    res.status(500).json({ message: "Error fetching posts" });
+  }
+};
+
+export const deletePost = async (req, res) => {
+  try {
+    const post = await Post.findById(req.params.id);
+
+    if (!post) return res.status(404).json({ message: "Post not found!" });
+
+    await post.deleteOne();
+    res.status(200).json({ message: "Post deleted!" });
+  } catch (error) {
+    res.status(500).json({ message: "Error deleting post!" });
   }
 };

@@ -73,7 +73,7 @@ PORT=5000
 MONGO_URI=your_mongodb_connection_string
 JWT_SECRET=your_secret_key
 
-# AWS S3
+# AWS S3 or anyother S3 Bucket 
 AWS_ACCESS_KEY=your_aws_access_key
 AWS_SECRET_KEY=your_aws_secret_key
 AWS_REGION=your_aws_region

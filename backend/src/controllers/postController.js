@@ -14,9 +14,9 @@ export const getPosts = async (req, res) => {
 // CREATE NEW POST
 export const createPost = async (req, res) => {
   try {
-    const { artist, title, audioUrl } = req.body;
+    const { artist, title, audioUrl, description } = req.body;
 
-    if (!title || !audioUrl) {
+    if (!title || !audioUrl || !description) {
       return res.status(400).json({ message: "Missing required fields!" });
     }
 
@@ -24,6 +24,7 @@ export const createPost = async (req, res) => {
       title,
       artist,
       audioUrl,
+      description,
       createdBy: req.user.id, // authMiddleware
     });
 
@@ -104,6 +105,60 @@ export const searchPosts = async (req, res) => {
   }
 };
 
+// GET ONE POST
+export const getPostById = async (req, res) => {
+  try {
+    const post = await Post.findById(req.params.id).populate(
+      "createdBy",
+      "username role"
+    );
+
+    if (!post) {
+      return res.status(404).json({ message: "Post not found!" });
+    }
+
+    res.status(200).json(post);
+  } catch (error) {
+    console.error("Error fetching post:", error);
+    res.status(500).json({ message: "Error fetching post" });
+  }
+};
+
+// ADD COMMENT
+export const addComment = async (req, res) => {
+  try {
+    const text = req.body.text?.trim();
+
+    if (!text) {
+      return res.status(400).json({ message: "Comment cannot be empty" });
+    }
+
+    const post = await Post.findById(req.params.id);
+
+    if (!post) {
+      return res.status(404).json({ message: "Post not found!" });
+    }
+
+    post.comments.push({
+      user: req.user.id,
+      username: req.user.username,
+      text,
+    });
+
+    await post.save();
+
+    const updated = await Post.findById(post._id).populate(
+      "createdBy",
+      "username role"
+    );
+
+    res.status(201).json(updated);
+  } catch (error) {
+    console.error("Error adding comment:", error);
+    res.status(500).json({ message: "Error adding comment" });
+  }
+};
+
 // LIKE / UNLIKE POST
 export const toggleLike = async (req, res) => {
   try {
@@ -126,6 +181,8 @@ export const toggleLike = async (req, res) => {
     res.status(200).json({
       message: hasLiked ? "Like removed" : "Post liked",
       likesCount: post.likes.length,
+      liked: !hasLiked,
+      likes: post.likes,
     });
   } catch (error) {
     console.error("Error toggling like:", error);

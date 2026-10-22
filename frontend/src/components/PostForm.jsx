@@ -33,7 +33,7 @@ export default function PostForm() {
   };
 
   return (
-    <div className="bg-gray-900 p-6 rounded-lg shadow-lg w-full max-w-md mx-auto">
+    <div className=" p-6 rounded-lg shadow-lg w-full max-w-md mx-auto ">
       <h2 className="text-xl font-bold mb-4 text-white">Create a Post</h2>
       <form onSubmit={handleSubmit} className="flex flex-col gap-3">
         <input

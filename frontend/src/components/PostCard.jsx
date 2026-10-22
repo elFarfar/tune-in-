@@ -11,7 +11,7 @@ const PostCard = ({ snippet }) => {
   const [isPlaying, setIsPlaying] = useState(false);
   const [likes, setLikes] = useState(snippet.likes?.length || 0);
   const [isLiked, setIsLiked] = useState(false);
-  const { user, token } = useContext(AuthContext);
+  const { token } = useContext(AuthContext);
 
   useEffect(() => {
     // Create waveform
@@ -55,8 +55,8 @@ const PostCard = ({ snippet }) => {
   };
 
   return (
-    <div className="bg-white shadow-md rounded-lg p-4 mb-6 w-full">
-      <h2 className="font-semibold text-gray-900">{snippet.title}</h2>
+    <div className="bg-dk-blue shadow-md rounded-lg p-4 mb-6 w-full">
+      <h2 className="font-semibold text-red-900">{snippet.title}</h2>
       <p className="text-sm text-gray-600">
         By {snippet.artist || snippet.createdBy?.username}
       </p>

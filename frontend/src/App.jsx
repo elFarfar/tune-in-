@@ -9,6 +9,7 @@ import Register from "./pages/Register";
 import MainLayout from "./layouts/MainLayout";
 import Explore from "./pages/Explore";
 import CreatePost from "./pages/CreatePosts";
+import PostId from "./pages/PostId";
 import { AuthProvider, useAuth } from "./context/AuthContext";
 
 function AppRoutes() {
@@ -34,6 +35,7 @@ function AppRoutes() {
         />
         <Route path="/profile" element={user ? <Profile /> : <Navigate to="/login" replace />} />
         <Route path="/explore" element={<Explore />} />
+        <Route path="/posts/:id" element={<PostId />} />
         <Route path="/create" element={user ? <CreatePost /> : <Navigate to="/login" replace />} />
       </Route>
 

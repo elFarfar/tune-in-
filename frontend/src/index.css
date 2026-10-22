@@ -1,4 +1,6 @@
 @import "tailwindcss";
+@theme {
+  --color-dk-blue: #09122C;
+}
 
 
-@tailwind utilities;

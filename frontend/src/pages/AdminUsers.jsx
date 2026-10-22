@@ -24,7 +24,7 @@ export default function AdminUsers() {
               <td className="p-3">{user.name}</td>
               <td className="p-3">{user.role}</td>
               <td className="p-3">
-                <button className="text-red-500 hover:text-red-700">Delete</button>
+                <button className="text-red-500 hover:text-red-700">delete</button>
               </td>
             </tr>
           ))}

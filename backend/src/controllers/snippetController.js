@@ -6,7 +6,8 @@ export const upploadSnippet = async (req, res) => {
     if (!req.file)
       return res.status(400).json({ message: "No file, uploaded " });
 
-    const url = await uploadToS3(req.file);
+    const audioUrl = await uploadToS3(req.file);
+    
     const snippet = await Snippet.create({
       title: req.body.title || req.file.originalname,
       artist: req.body.artist || "unknown",

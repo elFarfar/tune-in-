@@ -26,11 +26,13 @@ export default function Explore() {
         <input
           type="text"
           placeholder="Search for artists, titles..."
-          className="flex-1 p-2 rounded text-black"
+          className="flex-1 p-2 rounded text-white"
           value={query}
           onChange={(e) => setQuery(e.target.value)}
         />
-        <button className="bg-blue-500 px-4 rounded hover:bg-blue-600">Search</button>
+        <button className="bg-blue-500 px-4 rounded hover:bg-blue-600">
+          Search
+        </button>
       </form>
 
       <ul className="flex flex-col gap-3">

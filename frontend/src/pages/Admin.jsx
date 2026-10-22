@@ -5,6 +5,7 @@ import { AuthContext } from "../context/AuthContext";
 export default function Admin() {
   const { user } = useContext(AuthContext);
   const [users, setUsers] = useState([]);
+  const [posts, setPosts] = useState([]);
   const [newUser, setNewUser] = useState({
     username: "",
     email: "",
@@ -22,7 +23,7 @@ export default function Admin() {
   const fetchUsers = async () => {
     try {
       const res = await api.get("/admin/users");
-      setUsers(res.data);
+      setUsers(Array.isArray(res.data) ? res.data : []);
     } catch (error) {
       console.error("Fetch users error:", error.response?.data || error);
     }
@@ -51,6 +52,24 @@ export default function Admin() {
     }
   };
 
+  const fetchPosts = async () => {
+    try {
+      const res = await api.get("/admin/posts");
+      setPosts(Array.isArray(res.data) ? res.data : []);
+    } catch (error) {
+      console.error("Fetch posts error:", error.response?.data || error);
+    }
+  };
+
+  const handleDeletePost = async (id) => {
+    try {
+      await api.delete(`/admin/posts/${id}`);
+      setPosts((prev) => prev.filter((p) => p._id !== id));
+    } catch (error) {
+      console.error("Delete post error:", error.response?.data || error);
+    }
+  };
+
   // UPDATE ROLE
   const handleRoleChange = async (id, role) => {
     try {
@@ -69,13 +88,18 @@ export default function Admin() {
         Admin Panel
       </h1>
 
-      {/* BUTTON TO LOAD USERS */}
-      <div className="mb-4 text-center">
+      <div className="mb-4 text-center flex justify-center gap-3">
         <button
           onClick={fetchUsers}
           className="bg-green-500 hover:bg-green-600 px-4 py-2 rounded text-white font-semibold"
         >
           Load Users
+        </button>
+        <button
+          onClick={fetchPosts}
+          className="bg-green-500 hover:bg-green-600 px-4 py-2 rounded text-white font-semibold"
+        >
+          Load Posts
         </button>
       </div>
 
@@ -132,7 +156,7 @@ export default function Admin() {
         {users.map((u) => (
           <div
             key={u._id}
-            className="flex justify-between items-center bg-gray-800 p-3 rounded-lg"
+            className="flex justify-between items-center bg-gray-800 p-3 rounded-lg hover:bg-gray-500/75"
           >
             <div>
               <p className="font-semibold">{u.username}</p>
@@ -142,7 +166,7 @@ export default function Admin() {
               <select
                 value={u.role}
                 onChange={(e) => handleRoleChange(u._id, e.target.value)}
-                className="text-black p-1 rounded"
+                className="text-white p-1 rounded bg-black"
               >
                 <option value="artist">Artist</option>
                 <option value="producer">Producer</option>
@@ -156,6 +180,30 @@ export default function Admin() {
                 Delete
               </button>
             </div>
+          </div>
+        ))}
+      </div>
+
+      <h2 className="text-2xl font-semibold mb-3 mt-8">All Posts</h2>
+      <div className="space-y-3">
+        {posts.map((p) => (
+          <div
+            key={p._id}
+            className="flex justify-between items-center bg-gray-800 p-3 rounded-lg hover:bg-gray-500/75"
+          >
+            <div>
+              <p className="font-semibold">{p.title}</p>
+              <p className="text-gray-400 text-sm">
+                {p.artist || p.createdBy?.username || "Unknown artist"}
+                {p.description ? ` — ${p.description}` : ""}
+              </p>
+            </div>
+            <button
+              onClick={() => handleDeletePost(p._id)}
+              className="bg-red-500 hover:bg-red-600 px-3 py-1 rounded text-sm"
+            >
+              Delete
+            </button>
           </div>
         ))}
       </div>
